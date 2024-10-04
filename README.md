@@ -1,1 +1,2 @@
 # Anomaly Detection
+This repository provides Python-based anomaly detection rules, built to seamlessly integrate with any SIEM by simply modifying the data source in the rules. The solution offers flexibility for adapting to different event sources across environments, making it ideal for advanced detection of unusual behaviors and potential threats in your infrastructure.

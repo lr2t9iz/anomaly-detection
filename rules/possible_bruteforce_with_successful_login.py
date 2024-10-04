@@ -35,7 +35,7 @@ def source():
 import pandas as pd
 from datetime import timedelta
 
-def logic(data):
+def rule(data):
     df = pd.json_normalize(data)
     # timetamp, 
     df['timestamp'] = pd.to_datetime(df['timestamp'])
@@ -47,9 +47,10 @@ def logic(data):
     successful_logins = df[df['eventID'] == "4624"]
     failed_logins = df[df['eventID'] == "4625"]
 
-    # LOGIC
+    # rule
     mins=2
     alert_events = []
+    alert_df = pd.DataFrame(alert_events)
 
     for index, success in successful_logins.iterrows():
         time_window_start = success['timestamp'] - timedelta(minutes=mins)
@@ -62,7 +63,8 @@ def logic(data):
             succes_result['count_failed'] = count_failed
             alert_events.append(succes_result)
 
-    alert_df = pd.DataFrame(alert_events)
-    alert_df['timestamp'] = alert_df['timestamp'].astype(str)
-    alert_df['rule_name'] = "possible_bruteforce_with_successful_login"
+    if alert_events:
+        alert_df['timestamp'] = alert_df['timestamp'].astype(str)
+        alert_df['rule_name'] = "possible_bruteforce_with_successful_login"
     return alert_df.to_dict(orient='records')
+    

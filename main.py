@@ -22,7 +22,7 @@ def extract_data(index_pattern, query):
         data = [doc['_source'] for doc in docs]
     return data
 
-def transform_rules():
+def import_rules():
     rules = []
     rules_path = os.listdir('rules')
     for filename in rules_path:
@@ -44,12 +44,12 @@ def load_result(results):
     return postinfo.json()
 
 def main():
-    rules = transform_rules()
+    rules = import_rules()
     for rule in rules:
         index_pattern, query = rule.source()
         data = extract_data(index_pattern, query)
         if data:
-            results = rule.logic(data)
+            results = rule.rule(data)
             if results:
                 load_result(results)
 
