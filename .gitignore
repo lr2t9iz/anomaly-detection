@@ -1,3 +1,5 @@
 .env
 t3mp/
 __pycache__/
+anomaly_detection.egg-info/
+build/
